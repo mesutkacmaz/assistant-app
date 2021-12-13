@@ -11,18 +11,27 @@ export class User {
   @ObjectIdColumn()
   _id: string;
 
+  @Column()
+  googleId: string;
+
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column()
   username: string;
 
-  @Column({ nullable: false })
+  @Column()
+  givenName: string;
+
+  @Column()
+  familyName: string;
+
+  @Column()
   password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ default: Date.now() })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ default: Date.now() })
   updatedAt: Date;
 }

@@ -1,7 +1,17 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { Response } from 'express';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 import { LoginDto } from '../dto/login.dto';
 import { RegisterDto } from '../dto/register.dto';
+import { GoogleOauthGuard } from '../guards/google-oauth.guard';
 import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
@@ -22,5 +32,15 @@ export class AuthController {
     const loginData = await this.authService.login(loginDto);
     loginData.user.password = undefined;
     return res.status(HttpStatus.OK).send({ ...loginData });
+  }
+
+  @Get('google')
+  @UseGuards(GoogleOauthGuard)
+  async signInWithGoogle() {}
+
+  @Get('google/redirect')
+  @UseGuards(GoogleOauthGuard)
+  async signInWithGoogleRedirect(@Res() res: Response) {
+    res.redirect('/');
   }
 }
