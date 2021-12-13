@@ -1,5 +1,6 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { LoginDto } from '../dto/login.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { AuthService } from '../services/auth.service';
 
@@ -14,5 +15,12 @@ export class AuthController {
     return res.status(HttpStatus.CREATED).send({
       ...user,
     });
+  }
+
+  @Post('login')
+  async login(@Body() loginDto: LoginDto, @Res() res: Response) {
+    const loginData = await this.authService.login(loginDto);
+    loginData.user.password = undefined;
+    return res.status(HttpStatus.OK).send({ ...loginData });
   }
 }
