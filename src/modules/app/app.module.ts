@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
+import { DhikrModule } from '../dhikr/dhikr.module';
 import { User } from '../auth/entities/user.entity';
 
 @Module({
@@ -18,6 +19,7 @@ import { User } from '../auth/entities/user.entity';
       keepConnectionAlive: true,
     }),
     AuthModule,
+    DhikrModule,
   ],
   controllers: [],
   providers: [],
